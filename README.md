@@ -1,23 +1,26 @@
 # HCI Swiss — Public Project Information
 
-HCI Swiss develops digital tools and operating workflows for home-care and healthcare services.
+**FK HERMES INTERNATIONAL** is the public-facing umbrella brand for HCI Swiss.
 
-This repository is intentionally limited to public-facing information. The proprietary application source and confidential operating material remain private.
+HCI Swiss develops non-clinical digital operations and documentation workflows for care-service organisations and independent professionals.
 
-## Opportunities
+This repository is intended only for public commercial information. Proprietary application code, deployment configuration, customer information, credentials and confidential operating material must not be committed here.
 
-HCI Swiss is open to:
-- healthcare and home-care partnerships
-- enterprise pilots
-- licensing discussions
-- technology integrations
-- distribution partnerships
-- institutional collaboration
+## Commercial enquiries
 
-## Commercial focus
+Available for qualification, subject to confirmed scope, eligibility, operating capacity and commercial terms:
 
-Primary models are recurring software subscriptions, enterprise licensing, implementation services and qualified pilot programmes.
+- CareOps workflow and documentation services
+- Enterprise integration and licensing discussions
+- Qualified institutional and distribution partnerships
+- Scoped implementation and onboarding services
 
-## Learn more
+Commercial information is not proof that a product or service is available for purchase in every country. The legal contracting and invoicing entity must be correctly identified in the applicable contractual documents; the public brand is not itself a separate legal person.
+
+## Official website
 
 https://www.hciswiss.com
+
+---
+
+© 2026 FK HERMES INTERNATIONAL — public commercial information.
