@@ -1,0 +1,33 @@
+# Public informational repository: no executable product source or secrets.
+# Advisory guard for normal Git workflows; does not prevent git add -f.
+# The current README is intentionally the only public product information.
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+*.bak
+*.backup
+*.dump
+.env
+.env.*
+**/.env
+**/.env.*
+*.pem
+*.p12
+*.pfx
+*.key
+id_rsa*
+id_ed25519*
+backend/
+database/
+workers/
+app/
+src/
+supabase/
+migrations/
+node_modules/
+.next/
+dist/
+build/
