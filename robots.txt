@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fkhermes23-byte.github.io/HCISWISS.com/
