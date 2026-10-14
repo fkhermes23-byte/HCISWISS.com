@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "brand": "HCI Swiss",
+  "operator": "FK HERMES INTERNATIONAL",
+  "official_website": "https://www.hciswiss.com",
+  "qualification_url": "https://www.hciswiss.com",
+  "offers": [
+    {
+      "id": "careops-workflow-review",
+      "name": "CareOps workflow review",
+      "category": "professional_service",
+      "status": "qualification_required",
+      "description": "Map a specific non-clinical administrative or documentation workflow and define an implementation-ready improvement plan."
+    },
+    {
+      "id": "scoped-implementation",
+      "name": "Scoped implementation",
+      "category": "professional_service",
+      "status": "qualification_required",
+      "description": "Configure an agreed non-clinical workflow, documentation structure or operational tool within a confirmed delivery scope."
+    },
+    {
+      "id": "partnership-licensing",
+      "name": "Partnership and licensing",
+      "category": "business_service",
+      "status": "qualification_required",
+      "description": "Evaluate qualified institutional, distribution, integration or licensing opportunities."
+    }
+  ],
+  "commercial_notice": "Availability, scope, pricing and contracting entity are confirmed during qualification. No guaranteed outcome."
+}
