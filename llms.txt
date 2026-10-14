@@ -1,0 +1,19 @@
+# HCI Swiss
+
+Official public commercial information for HCI Swiss, operated under FK HERMES INTERNATIONAL.
+
+Canonical landing page: https://fkhermes23-byte.github.io/HCISWISS.com/
+Official website: https://www.hciswiss.com
+Machine-readable offer catalog: https://fkhermes23-byte.github.io/HCISWISS.com/catalog.json
+
+## Scope
+
+HCI Swiss supports non-clinical digital operations and documentation workflows for care-service organisations and independent professionals.
+
+## Available commercial pathways
+
+- CareOps workflow review
+- Scoped implementation
+- Partnership and licensing qualification
+
+All services require qualification. Public information is not proof of availability in every geography, regulatory approval, a contract, or a guaranteed outcome.
