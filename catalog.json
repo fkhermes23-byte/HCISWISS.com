@@ -1,31 +1,69 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "brand": "HCI Swiss",
   "operator": "FK HERMES INTERNATIONAL",
   "official_website": "https://www.hciswiss.com",
   "qualification_url": "https://www.hciswiss.com",
+  "commercial_model": "recurring_only",
+  "public_checkout": false,
+  "github_sponsors_active": false,
   "offers": [
     {
-      "id": "careops-workflow-review",
-      "name": "CareOps workflow review",
-      "category": "professional_service",
+      "id": "careops-readiness-retainer",
+      "name": "PRE — CareOps readiness retainer",
+      "category": "recurring_service",
+      "lifecycle_stage": "pre_deal",
       "status": "qualification_required",
-      "description": "Map a specific non-clinical administrative or documentation workflow and define an implementation-ready improvement plan."
+      "recurring": true,
+      "supported_billing_periods": ["month", "year"],
+      "one_time_checkout": false,
+      "mandate_required": true,
+      "cancellation_path_required": true,
+      "material_change_reacceptance_required": true,
+      "description": "Recurring qualification, workflow mapping, documentation readiness, risk review and prioritisation maintained as operating conditions change."
     },
     {
-      "id": "scoped-implementation",
-      "name": "Scoped implementation",
-      "category": "professional_service",
+      "id": "managed-implementation-operations",
+      "name": "DURING — Managed implementation and operations",
+      "category": "recurring_service",
+      "lifecycle_stage": "during_deal",
       "status": "qualification_required",
-      "description": "Configure an agreed non-clinical workflow, documentation structure or operational tool within a confirmed delivery scope."
+      "recurring": true,
+      "supported_billing_periods": ["month", "year"],
+      "one_time_checkout": false,
+      "mandate_required": true,
+      "cancellation_path_required": true,
+      "material_change_reacceptance_required": true,
+      "description": "Recurring implementation, configuration, operational support and licensed use within an agreed scope, capacity model and measurable service level."
     },
     {
-      "id": "partnership-licensing",
-      "name": "Partnership and licensing",
-      "category": "business_service",
+      "id": "continuity-monitoring-renewal",
+      "name": "POST — Continuity, monitoring and renewal",
+      "category": "recurring_service",
+      "lifecycle_stage": "post_deal",
       "status": "qualification_required",
-      "description": "Evaluate qualified institutional, distribution, integration or licensing opportunities."
+      "recurring": true,
+      "supported_billing_periods": ["month", "year"],
+      "one_time_checkout": false,
+      "mandate_required": true,
+      "cancellation_path_required": true,
+      "material_change_reacceptance_required": true,
+      "description": "Ongoing maintenance, monitoring, reporting, support, renewal and separately accepted expansion with an operational cancellation or revocation path."
+    },
+    {
+      "id": "recurring-partnership-licensing",
+      "name": "Recurring partnership and licensing",
+      "category": "recurring_business_relationship",
+      "lifecycle_stage": "cross_lifecycle",
+      "status": "qualification_required",
+      "recurring": true,
+      "supported_billing_periods": ["month", "year"],
+      "one_time_checkout": false,
+      "mandate_required": true,
+      "cancellation_path_required": true,
+      "material_change_reacceptance_required": true,
+      "description": "Continuing institutional, distribution, integration or licensing relationships subject to verified authority, scope, geography, capacity and terms."
     }
   ],
-  "commercial_notice": "Availability, scope, pricing and contracting entity are confirmed during qualification. No guaranteed outcome."
+  "commercial_notice": "No public payment route is provided. Availability, contracting entity, service scope, price, currency, billing frequency, renewal, cancellation, revocation, data obligations and acceptance criteria must be confirmed in versioned written terms. Material changes require new informed acceptance. Repository presence is not evidence of payment, delivery, regulatory clearance or CASH_RECONCILED."
 }
