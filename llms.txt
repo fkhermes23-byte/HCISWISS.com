@@ -25,6 +25,8 @@ Supported billing periods: month or year
 - `continuity-monitoring-renewal` — POST — Continuity, monitoring and renewal (`recurring_service`, `post_deal`)
 - `recurring-partnership-licensing` — Recurring partnership and licensing (`recurring_business_relationship`, `cross_lifecycle`)
 
+## Shared recurring terms
+
 Every listed offer is recurring, requires qualification and an expressly accepted payment mandate, supports an operational cancellation path, prohibits one-time checkout and requires new informed acceptance after a material change.
 
 ## Commercial boundary

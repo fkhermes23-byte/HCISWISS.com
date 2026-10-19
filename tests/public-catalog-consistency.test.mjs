@@ -17,6 +17,45 @@ assert.ok(Array.isArray(catalog.offers) && catalog.offers.length > 0);
 const ids = catalog.offers.map(({ id }) => id);
 assert.equal(new Set(ids).size, ids.length, "catalog offer IDs must be unique");
 
+const expectedPublicOffers = catalog.offers.map(({ id, name, category, lifecycle_stage }) => ({
+  id,
+  name,
+  category,
+  lifecycle: lifecycle_stage,
+}));
+
+function parseCanonicalOfferSection(source) {
+  const sourceLines = source.split("\n");
+  const start = sourceLines.findIndex((line) => line.trim() === "## Canonical recurring offers");
+  assert.notEqual(start, -1, "llms.txt must contain one canonical recurring offers section");
+  const end = sourceLines.findIndex((line, index) => index > start && line.startsWith("## "));
+  assert.notEqual(end, -1, "canonical recurring offers section must end at the next heading");
+  const offerLines = sourceLines.slice(start + 1, end).map((line) => line.trim()).filter(Boolean);
+  return offerLines.map((line) => {
+    const match = line.match(
+      /^- `([^`]+)` — (.+) \(`([^`]+)`, `([^`]+)`\)$/,
+    );
+    assert.ok(match, `invalid or unknown canonical offer line: ${line}`);
+    return {
+      id: match[1],
+      name: match[2],
+      category: match[3],
+      lifecycle: match[4],
+    };
+  });
+}
+
+function assertCanonicalOfferSection(source) {
+  assert.deepEqual(
+    parseCanonicalOfferSection(source),
+    expectedPublicOffers,
+    "llms.txt canonical offers must exactly equal catalog.json in count, set, values and order",
+  );
+}
+
+assert.equal(expectedPublicOffers.length, 4, "the reviewed recurring-only catalog must contain exactly four offers");
+assertCanonicalOfferSection(llms);
+
 for (const offer of catalog.offers) {
   assert.equal(offer.recurring, true, `${offer.id}: recurring must be true`);
   assert.equal(offer.one_time_checkout, false, `${offer.id}: one-time checkout must be false`);
@@ -25,10 +64,36 @@ for (const offer of catalog.offers) {
   assert.equal(offer.cancellation_path_required, true, `${offer.id}: cancellation path must be required`);
   assert.equal(offer.material_change_reacceptance_required, true, `${offer.id}: material changes must require reacceptance`);
   assert.deepEqual(offer.supported_billing_periods, ["month", "year"], `${offer.id}: billing periods drifted`);
-  assert.equal(llms.split(`\`${offer.id}\``).length - 1, 1, `${offer.id}: llms.txt must expose the ID exactly once`);
-  assert.ok(llms.includes(offer.name), `${offer.id}: llms.txt name drifted`);
-  assert.ok(llms.includes("(`" + offer.category + "`, `" + offer.lifecycle_stage + "`)"), `${offer.id}: category/lifecycle drifted`);
 }
+
+const nextHeading = "## Shared recurring terms";
+const insertBeforeNextHeading = (text) => llms.replace(nextHeading, text + nextHeading);
+const canonicalLines = expectedPublicOffers.map(
+  ({ id, name, category, lifecycle }) => `- \`${id}\` — ${name} (\`${category}\`, \`${lifecycle}\`)`,
+);
+
+assert.throws(
+  () => assertCanonicalOfferSection(insertBeforeNextHeading(canonicalLines[0] + "\n\n")),
+  /exactly equal|invalid or unknown/,
+  "duplicate offer lines must fail",
+);
+assert.throws(
+  () => assertCanonicalOfferSection(insertBeforeNextHeading("- `unknown-offer` — Unknown (`recurring_service`, `pre_deal`)\n\n")),
+  /exactly equal/,
+  "unknown extra offers must fail",
+);
+assert.throws(
+  () => assertCanonicalOfferSection(llms.replace("careops-readiness-retainer", "unknown-id")),
+  /exactly equal/,
+  "unknown replacement IDs must fail",
+);
+assert.throws(
+  () => assertCanonicalOfferSection(
+    llms.replace(canonicalLines.join("\n"), [...canonicalLines].reverse().join("\n")),
+  ),
+  /exactly equal/,
+  "catalog order drift must fail",
+);
 
 for (const obsolete of ["- CareOps workflow review", "- Scoped implementation", "- Partnership and licensing qualification"]) {
   assert.ok(!llms.includes(obsolete), `obsolete llms.txt pathway remains: ${obsolete}`);
@@ -38,6 +103,6 @@ assert.ok(llms.includes(catalog.commercial_notice), "llms.txt commercial boundar
 assert.match(index, /recurring/i);
 assert.match(readme, /recurring/i);
 assert.match(support, /recurring/i);
-assert.match(sitemap, /<lastmod>2026-10-19<\/lastmod>/);
+assert.match(sitemap, /<lastmod>2026-10-18<\/lastmod>/);
 
 console.log(`PASS: ${ids.length} recurring offers aligned across public catalog surfaces.`);
