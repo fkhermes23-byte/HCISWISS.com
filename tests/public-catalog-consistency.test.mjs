@@ -26,8 +26,13 @@ const expectedPublicOffers = catalog.offers.map(({ id, name, category, lifecycle
 
 function parseCanonicalOfferSection(source) {
   const sourceLines = source.split("\n");
-  const start = sourceLines.findIndex((line) => line.trim() === "## Canonical recurring offers");
-  assert.notEqual(start, -1, "llms.txt must contain one canonical recurring offers section");
+  const isCanonicalHeading = (line) => line.trim() === "## Canonical recurring offers";
+  assert.equal(
+    sourceLines.filter(isCanonicalHeading).length,
+    1,
+    "llms.txt must contain exactly one canonical recurring offers section",
+  );
+  const start = sourceLines.findIndex(isCanonicalHeading);
   const end = sourceLines.findIndex((line, index) => index > start && line.startsWith("## "));
   assert.notEqual(end, -1, "canonical recurring offers section must end at the next heading");
   const offerLines = sourceLines.slice(start + 1, end).map((line) => line.trim()).filter(Boolean);
@@ -93,6 +98,27 @@ assert.throws(
   ),
   /exactly equal/,
   "catalog order drift must fail",
+);
+
+// A later duplicate section must not escape validation after the first match.
+assert.throws(
+  () => assertCanonicalOfferSection(
+    `${llms}\n## Canonical recurring offers\n\n- \`unapproved-once\` — Once (\`one_time\`, \`post_deal\`)\n\n## End\n`,
+  ),
+  /exactly one canonical recurring offers section/,
+  "a second canonical section with an unapproved offer must fail",
+);
+assert.throws(
+  () => assertCanonicalOfferSection(
+    `## Canonical recurring offers\n\n${canonicalLines.join("\n")}\n\n${llms}`,
+  ),
+  /exactly one canonical recurring offers section/,
+  "a preceding duplicate canonical section must fail even when its offers match",
+);
+assert.throws(
+  () => assertCanonicalOfferSection(llms.replace("## Canonical recurring offers", "## Retired heading")),
+  /exactly one canonical recurring offers section/,
+  "missing canonical section must fail",
 );
 
 for (const obsolete of ["- CareOps workflow review", "- Scoped implementation", "- Partnership and licensing qualification"]) {
