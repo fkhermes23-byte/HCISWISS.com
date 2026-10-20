@@ -10,10 +10,27 @@ Machine-readable offer catalog: https://fkhermes23-byte.github.io/HCISWISS.com/c
 
 HCI Swiss supports non-clinical digital operations and documentation workflows for care-service organisations and independent professionals.
 
-## Available commercial pathways
+## Recurring-only commercial model
 
-- CareOps workflow review
-- Scoped implementation
-- Partnership and licensing qualification
+Commercial model: recurring_only
+Public checkout: disabled
+GitHub Sponsors: inactive
+Qualification: required for every offer
+Supported billing periods: month or year
 
-All services require qualification. Public information is not proof of availability in every geography, regulatory approval, a contract, or a guaranteed outcome.
+## Canonical recurring offers
+
+- `careops-readiness-retainer` — PRE — CareOps readiness retainer (`recurring_service`, `pre_deal`)
+- `managed-implementation-operations` — DURING — Managed implementation and operations (`recurring_service`, `during_deal`)
+- `continuity-monitoring-renewal` — POST — Continuity, monitoring and renewal (`recurring_service`, `post_deal`)
+- `recurring-partnership-licensing` — Recurring partnership and licensing (`recurring_business_relationship`, `cross_lifecycle`)
+
+## Shared recurring terms
+
+Every listed offer is recurring, requires qualification and an expressly accepted payment mandate, supports an operational cancellation path, prohibits one-time checkout and requires new informed acceptance after a material change.
+
+## Commercial boundary
+
+No public payment route is provided. Availability, contracting entity, service scope, price, currency, billing frequency, renewal, cancellation, revocation, data obligations and acceptance criteria must be confirmed in versioned written terms. Material changes require new informed acceptance. Repository presence is not evidence of payment, delivery, regulatory clearance or CASH_RECONCILED.
+
+Public information is not proof of availability in every geography, regulatory approval, a contract or a guaranteed outcome.
