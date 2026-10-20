@@ -24,16 +24,31 @@ const expectedPublicOffers = catalog.offers.map(({ id, name, category, lifecycle
   lifecycle: lifecycle_stage,
 }));
 
+function parseAtxHeading(line) {
+  const match = line.match(/^ {0,3}(#{1,6})(?:[ \t]+(.*?)|[ \t]*)$/);
+  if (!match) return null;
+  return {
+    level: match[1].length,
+    text: (match[2] ?? "").replace(/[ \t]+#+[ \t]*$/, "").trim().replace(/[ \t]+/g, " "),
+  };
+}
+
 function parseCanonicalOfferSection(source) {
-  const sourceLines = source.split("\n");
-  const isCanonicalHeading = (line) => line.trim() === "## Canonical recurring offers";
+  const sourceLines = source.split(/\r\n|\n|\r/);
+  const isCanonicalHeading = (line) => {
+    const heading = parseAtxHeading(line);
+    return heading?.level === 2 && heading.text === "Canonical recurring offers";
+  };
   assert.equal(
     sourceLines.filter(isCanonicalHeading).length,
     1,
     "llms.txt must contain exactly one canonical recurring offers section",
   );
   const start = sourceLines.findIndex(isCanonicalHeading);
-  const end = sourceLines.findIndex((line, index) => index > start && line.startsWith("## "));
+  const end = sourceLines.findIndex((line, index) => {
+    const heading = parseAtxHeading(line);
+    return index > start && heading !== null && heading.level <= 2;
+  });
   assert.notEqual(end, -1, "canonical recurring offers section must end at the next heading");
   const offerLines = sourceLines.slice(start + 1, end).map((line) => line.trim()).filter(Boolean);
   return offerLines.map((line) => {
@@ -101,6 +116,27 @@ assert.throws(
 );
 
 // A later duplicate section must not escape validation after the first match.
+// Equivalent ATX headings must participate in both uniqueness and boundaries.
+for (const heading of [
+  "## Canonical recurring offers ##",
+  "##  Canonical recurring offers",
+  "  ## Canonical recurring offers",
+  "##\tCanonical recurring offers\t###",
+]) {
+  assertCanonicalOfferSection(llms.replace("## Canonical recurring offers", heading));
+  for (const source of [
+    `${llms}\n${heading}\n\n- \u0060unapproved-once\u0060 — Once (\u0060one_time\u0060, \u0060post_deal\u0060)\n\n## End\n`,
+    `${heading}\n\n${canonicalLines.join("\n")}\n\n${llms}`,
+  ]) {
+    assert.throws(
+      () => assertCanonicalOfferSection(source),
+      /exactly one canonical recurring offers section/,
+      "equivalent duplicate canonical headings must fail",
+    );
+  }
+}
+assertCanonicalOfferSection(llms.replaceAll("\n", "\r\n"));
+
 assert.throws(
   () => assertCanonicalOfferSection(
     `${llms}\n## Canonical recurring offers\n\n- \`unapproved-once\` — Once (\`one_time\`, \`post_deal\`)\n\n## End\n`,
